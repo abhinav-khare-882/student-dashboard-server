@@ -65,11 +65,20 @@ app.get("/students/:id", async (req, res) => {
 
 app.post("/students", upload.single("image"), async (req, res) => {
   try {
+    console.log("🟢 Received POST /students request");
+    console.log("📂 File received:", req.file);
+    console.log("📝 Request body:", req.body);
+
     const { firstName, lastName, studentID, email, phone, address, subjects } =
       req.body;
 
+    if (!firstName || !lastName || !studentID || !email || !phone || !address) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+
     const subjectsArray = subjects ? subjects.split(",") : [];
     const imageUrl = req.file ? req.file.path : "";
+
     const student = await StudentModel.create({
       firstName,
       lastName,
@@ -81,8 +90,10 @@ app.post("/students", upload.single("image"), async (req, res) => {
       image: imageUrl,
     });
 
+    console.log("✅ Student created:", student);
     res.status(201).json(student);
   } catch (err) {
+    console.error("❌ Error in POST /students:", err);
     res.status(500).json({ error: err.message });
   }
 });

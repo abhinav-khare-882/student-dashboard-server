@@ -11,7 +11,7 @@ const subjectsRoutes = require("./routes/Subject");
 const app = express();
 app.use(
   cors({
-    origin: "https://student-dashboard-frontend-gray.vercel.app/",
+    origin: "https://student-dashboard-frontend-gray.vercel.app",
     credentials: true,
   })
 );

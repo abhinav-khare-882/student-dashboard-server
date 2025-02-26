@@ -9,7 +9,12 @@ const StudentModel = require("./models/Students");
 const subjectsRoutes = require("./routes/Subject");
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://student-dashboard-frontend-gray.vercel.app/",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use("/subjects", subjectsRoutes);
 
